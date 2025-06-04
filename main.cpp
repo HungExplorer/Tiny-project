@@ -11,4 +11,7 @@ int main()
     A.display();
     b.assign();
     b.display();
+
+    LinearSystem Anb(A,b);
+    Anb.display();
 }

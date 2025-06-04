@@ -2,68 +2,48 @@
 #define MATRIX_H
 
 #include <iostream>
-#include <stdexcept>
+#include <cassert>  
 
 class Matrix {
 private:
     int mNumRows, mNumCols;
     double** mData;
 
-    //Memory Handling
     void allocateMemory();
     void freeMemory();
 
 public:
-    //Instructor
+    // Constructor and Destructor
     Matrix(int rows, int cols);
-
-    //Instructor with other object
     Matrix(const Matrix& other);
-
-    //Assigning
     Matrix& operator=(const Matrix& other);
-
-    //Deconstructor
     ~Matrix();
 
-    //Rows and Columns 
+    // Accessors
     int Rows() const;
     int Cols() const;
 
-    //Getting value at index (i,j)
+    // Overload bracket for element access
     double& operator()(int i, int j);
     const double& operator()(int i, int j) const;
 
-    //Operation
-    //Addition
+    // Addition, Subtraction, Multiplication and Scalar
     Matrix operator+(const Matrix& other) const;
-
-    //Subtraction
     Matrix operator-(const Matrix& other) const;
-
-    //Multiplication
     Matrix operator*(const Matrix& other) const;
-
-    //Scalar multiplication
     Matrix operator*(double scalar) const;
 
-    //Transpose
+    // Determinant, Inverse and pseudoInverse of Matrix
     Matrix transpose() const;
-
-    //Determinant
     double determinant() const;
-
-    //Invert
     Matrix inverse() const;
-
-    //pseudoInverse
     Matrix pseudoInverse() const;
-
-    //Data assignment
+        
+    //Gán dữ liệu
     void assign();
 
-    //Matrix display
-    void display() const;
+    //Hiển thị
+    void display() const; 
 };
 
-#endif 
+#endif

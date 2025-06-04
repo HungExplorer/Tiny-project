@@ -1,89 +1,99 @@
 #include <iostream>
 #include "Matrix.h"
 #include "Vector.h"
+#include "LinearSystem.h"
 
 using namespace std;
 
-class LinearSystem
+//size getter
+int LinearSystem::getSize()
 {
-    private:
-        int mSize;
-        Matrix* mpA;
-        Vector* mpb;
-        double** augMatrix;
+    return mSize;
+}
 
-    public:
-        //size getter
-        int getSize()
-        {
-            return mSize;
-        }
-
-        //Assignment method
-        void assign(Matrix* pA, Vector* pb)
-        {
-            //Assigning matrix
-            for (int i = 0; i < mSize; i++)
-            {
-                for (int j = 0; j < mSize; j++)
-                {
-                    augMatrix[i][j] = (*pA)(i,j);
-                }
-                //Assigning vector
-                augMatrix[i][mSize] = (*pb)(i);
-            }
-        }
-
-        //Constructor
-        LinearSystem(Matrix A, Vector b)
-        {
-            if(A.Rows() != A.Cols() || A.Cols() != b.getSize() || A.Rows() != b.getSize())
-            {
-                throw invalid_argument("Incompatible matrix and vector size, cannot initiate.");
-            }
-            else
-            {
-                mSize = b.getSize();
-                mpA = new Matrix(A);
-                mpb = new Vector(b);
-                
-                //Allocate array of int* (for rows)
-                augMatrix = new double*[mSize];
-
-                //Allocate each row (array of double)
-                for (int i = 0; i < mSize; ++i) 
-                {
-                    augMatrix[i] = new double[mSize + 1];
-                }
-
-                assign(mpA, mpb);
-                cout << "Linear System initiated" << endl;
-            }
-        }
-
-        //Display
-        void print()
-        {
-            for (int i = 0; i < mSize; i++, printf("\n"))
-                for (int j = 0; j <= mSize; j++)
-                {
-                    printf("%lf ", augMatrix[i][j]);
-                }
-            printf("\n");
-        }
+//Constructor
+LinearSystem::LinearSystem(Matrix A, Vector b)
+{
+    if(A.Rows() != A.Cols() || A.Cols() != b.getSize() || A.Rows() != b.getSize())
+    {
+        throw invalid_argument("Incompatible matrix and vector size, cannot initiate.");
+    }
+    else
+    {
+        mSize = b.getSize();
+        mpA = new Matrix(A);
+        mpb = new Vector(b);
         
-        //Obliterate default constructors
-        LinearSystem(const LinearSystem&) = delete;
-        LinearSystem& operator=(const LinearSystem&) = delete;
+        //Allocate array of int* (for rows)
+        augMatrix = new double*[mSize];
 
-        ~LinearSystem() 
+        //Allocate each row (array of double)
+        for (int i = 0; i < mSize; ++i) 
         {
-            for (int i = 0; i < mSize; i++) 
-            {
-                delete[] augMatrix[i];
-            }
-            delete[] augMatrix;
-            delete mpA;
-            delete mpb;
+            augMatrix[i] = new double[mSize + 1];
         }
-};
+
+        assign(mpA, mpb);
+        cout << endl << "Linear System initiated" << endl;
+    }
+}
+
+//Display
+void LinearSystem::display()
+{
+    cout << endl << "[";
+    for (int i = 0; i < mSize; ++i)
+    {
+        if (i != 0)
+        {
+            cout << " ";
+        }    
+        for (int j = 0; j <= mSize; ++j)
+        {
+            cout<< augMatrix[i][j];
+            if (j != mSize)
+            {
+                if(j == mSize - 1)
+                {
+                    cout << " |";
+                }
+                cout << " ";
+            }
+            if (j == mSize && i != mSize - 1)
+            {
+                cout << endl;
+            }
+            if (j == mSize && i == mSize - 1)
+            {
+                cout << "]" << endl;
+            }
+        }
+    }
+}
+
+LinearSystem::~LinearSystem() 
+{
+    for (int i = 0; i < mSize; i++) 
+    {
+        delete[] augMatrix[i];
+    }
+    delete[] augMatrix;
+    delete mpA;
+    delete mpb;
+}
+
+
+//Assignment method
+void LinearSystem::assign(Matrix* pA, Vector* pb)
+{
+    //Assigning matrix
+    for (int i = 0; i < mSize; i++)
+    {
+        for (int j = 0; j < mSize; j++)
+        {
+            augMatrix[i][j] = (*pA)(i + 1,j + 1);
+        }
+        //Assigning vector
+        augMatrix[i][mSize] = (*pb)(i + 1);
+    }
+}

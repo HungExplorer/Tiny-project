@@ -1,129 +1,149 @@
 #include "Vector.h"
-#include <cassert>
 #include <iostream>
+#include <cassert>  // Dùng để kiểm tra chỉ số hợp lệ
+
 using namespace std;
 
-//Constructor
-Vector::Vector(int size) : size(size) {
-    data = new double[size];
-    for (int i = 0; i < size; i++) {
-        data[i] = 0.0;
+// Constructor: khởi tạo vector với size phần tử và gán tất cả = 0.0
+Vector::Vector(int size) : mSize(size) {
+    assert(size > 0);  // Đảm bảo size > 0
+    mData = new double[mSize];
+    for (int i = 0; i < mSize; ++i) {
+        mData[i] = 0.0;
     }
 }
 
-Vector::Vector(const Vector& other) : size(other.size) {
-    data = new double[size];
-    for (int i = 0; i < size; i++) {
-        data[i] = other.data[i];
+// Copy constructor
+Vector::Vector(const Vector& other) : mSize(other.mSize) {
+    mData = new double[mSize];
+    for (int i = 0; i < mSize; ++i) {
+        mData[i] = other.mData[i];
     }
 }
 
-//Destructor
+// Destructor
 Vector::~Vector() {
-    delete[] data;
+    delete[] mData;
 }
 
-//Assigning 
+// Toán tử gán
 Vector& Vector::operator=(const Vector& other) {
     if (this != &other) {
-        delete[] data;
-        size = other.size;
-        data = new double[size];
-        for (int i = 0; i < size; i++) {
-            data[i] = other.data[i];
+        delete[] mData;
+
+        mSize = other.mSize;
+        mData = new double[mSize];
+        for (int i = 0; i < mSize; ++i) {
+            mData[i] = other.mData[i];
         }
     }
     return *this;
 }
 
+// Trả về kích thước
 int Vector::getSize() const {
-    return size;
+    return mSize;
 }
 
-//Getting value at index (i)
+// Truy cập từ chỉ số 0
 double& Vector::operator[](int index) {
-    assert(index >= 0 && index < size);
-    return data[index];
+    assert(index >= 0 && index < mSize);
+    return mData[index];
 }
 
+// Truy cập từ chỉ số 1
 double& Vector::operator()(int index) {
-    assert(index >= 1 && index <= size);
-    return data[index - 1];
+    assert(index >= 1 && index <= mSize);
+    return mData[index - 1];
 }
 
-//Vector operation
+// Cộng hai vector
 Vector Vector::operator+(const Vector& other) const {
-    assert(size == other.size);
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.data[i] = data[i] + other.data[i];
+    assert(mSize == other.mSize);
+    Vector result(mSize);
+    for (int i = 0; i < mSize; ++i) {
+        result.mData[i] = mData[i] + other.mData[i];
     }
     return result;
 }
 
+// Trừ hai vector
 Vector Vector::operator-(const Vector& other) const {
-    assert(size == other.size);
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.data[i] = data[i] - other.data[i];
+    assert(mSize == other.mSize);
+    Vector result(mSize);
+    for (int i = 0; i < mSize; ++i) {
+        result.mData[i] = mData[i] - other.mData[i];
     }
     return result;
 }
 
-Vector Vector::operator*(const Vector& other) const {
-    assert(size == other.size);
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.data[i] = data[i] * other.data[i];
+// Nhân vô hướng (dot product) trả về double
+double Vector::operator*(const Vector& other) const {
+    assert(mSize == other.mSize);
+    double result = 0.0;
+    for (int i = 0; i < mSize; ++i) {
+        result += mData[i] * other.mData[i];
     }
     return result;
 }
 
-//Fixed value addition and subtraction/Scalar multiplication
+// Cộng scalar
 Vector Vector::operator+(double value) const {
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.data[i] = data[i] + value;
+    Vector result(mSize);
+    for (int i = 0; i < mSize; ++i) {
+        result.mData[i] = mData[i] + value;
     }
     return result;
 }
 
+// Trừ scalar
 Vector Vector::operator-(double value) const {
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.data[i] = data[i] - value;
+    Vector result(mSize);
+    for (int i = 0; i < mSize; ++i) {
+        result.mData[i] = mData[i] - value;
     }
     return result;
 }
 
+// Nhân scalar
 Vector Vector::operator*(double value) const {
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.data[i] = data[i] * value;
+    Vector result(mSize);
+    for (int i = 0; i < mSize; ++i) {
+        result.mData[i] = mData[i] * value;
     }
     return result;
 }
+
+// Đổi dấu toàn bộ vector
+Vector Vector::operator-() const {
+    Vector result(mSize);
+    for (int i = 0; i < mSize; ++i) {
+        result.mData[i] = -mData[i];
+    }
+    return result;
+}
+
 //Data assignment
 void Vector::assign(){
     cout << endl << "Enter the elements for vector: " << endl;
-    for (int i = 0; i < size; i++) 
+    for (int i = 0; i < mSize; i++) 
     {
         cout << "Enter the value for position " << i+1 << ": ";
-        cin >> data[i];
+        cin >> mData[i];
     }
 }
 
 //Vector display
 void Vector::display() const{
-    cout << "[";
-    for (int i = 0; i < size; i++) 
+    cout << endl << "[";
+    for (int i = 0; i < mSize; i++) 
     {
         if(i != 0)
         {
             cout << " ";
         }
-        cout << data[i];
-        if (i != size - 1)
+        cout << mData[i];
+        if (i != mSize - 1)
             cout << endl;
         else 
             cout << "]" << endl;
