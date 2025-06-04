@@ -14,7 +14,7 @@ class LinearSystem
 
     public:
         //size getter
-        void getSize()
+        int getSize()
         {
             return mSize;
         }
@@ -30,7 +30,7 @@ class LinearSystem
                     augMatrix[i][j] = (*pA)(i,j);
                 }
                 //Assigning vector
-                augMatrix[i][mSize] = (*pb).data[i];
+                augMatrix[i][mSize] = (*pb)(i);
             }
         }
 
@@ -39,11 +39,11 @@ class LinearSystem
         {
             if(A.Rows() != A.Cols() || A.Cols() != b.getSize() || A.Rows() != b.getSize())
             {
-                throw invalid_argument("Incompatible matrix and vector size, cannot initiate.")
+                throw invalid_argument("Incompatible matrix and vector size, cannot initiate.");
             }
             else
             {
-                mSize = B.size;
+                mSize = b.getSize();
                 mpA = new Matrix(A);
                 mpb = new Vector(b);
                 
