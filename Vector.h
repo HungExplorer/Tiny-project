@@ -1,47 +1,54 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-// Lớp Vector dùng để biểu diễn một vector 
+// Lớp Vector biểu diễn vector số thực 1 chiều
 class Vector {
 private:
-    int size;              // Số phần tử trong vector
-    double* data;          // Con trỏ tới mảng chứa dữ liệu kiểu double
+    int mSize;          // Kích thước vector
+    double* mData;      // Mảng chứa các giá trị thực
 
 public:
-    // Constructor: khởi tạo vector với kích thước cho trước
+    // Constructor: khởi tạo vector với kích thước
     Vector(int size);
 
-     // Copy constructor: sao chép vector khác
+    // Copy constructor: sao chép vector khác
     Vector(const Vector& other);
 
-     // Destructor: giải phóng vùng nhớ đã cấp phát
+    // Destructor: giải phóng bộ nhớ
     ~Vector();
 
-    // Toán tử gán: gán một vector khác vào vector hiện tại
+    // Toán tử gán: gán vector khác vào vector hiện tại
     Vector& operator=(const Vector& other);
 
-     // Trả về kích thước của vector
+    // Trả về kích thước vector
     int getSize() const;
 
-    double& operator[](int index);      
-    double& operator()(int index);  
+    // Truy cập phần tử từ 0 (kiểu mảng)
+    double& operator[](int index);
 
-    // Cộng hai vector
+    // Truy cập phần tử từ 1 (kiểu toán học)
+    double& operator()(int index);
+
+    // Toán tử unary âm: -v
+    Vector operator-() const;
+
+    // Cộng 2 vector
     Vector operator+(const Vector& other) const;
 
-    // Trừ hai vector
+    // Trừ 2 vector
     Vector operator-(const Vector& other) const;
 
-    // Nhân từng phần tử giữa hai vector
-    Vector operator*(const Vector& other) const; 
+    // Dot product giữa 2 vector → trả về số thực
+    double operator*(const Vector& other) const;
 
-    // Cộng mỗi phần tử trong vector với một số
+    // Cộng với số
     Vector operator+(double value) const;
 
-    // Trừ mỗi phần tử trong vector với một số
+    // Trừ với số
     Vector operator-(double value) const;
 
-    // Nhân mỗi phần tử trong vector với một số
+    // Nhân với số
     Vector operator*(double value) const;
 };
+
 #endif
