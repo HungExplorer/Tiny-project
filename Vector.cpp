@@ -1,18 +1,19 @@
 #include "Vector.h"
-#include <cassert>
+#include <cassert>  // Kiểm tra chỉ số và điều kiện hợp lệ
 
-// Constructor: khởi tạo vector với kích thước mSize
+// Constructor: khởi tạo vector với mSize phần tử, gán tất cả = 0.0
 Vector::Vector(int size) : mSize(size) {
+    assert(size > 0);  // Đảm bảo kích thước hợp lệ
     mData = new double[mSize];
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         mData[i] = 0.0;
     }
 }
 
-// Copy constructor: tạo vector mới bằng cách sao chép vector khác
+// Copy constructor: tạo bản sao của vector khác
 Vector::Vector(const Vector& other) : mSize(other.mSize) {
     mData = new double[mSize];
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         mData[i] = other.mData[i];
     }
 }
@@ -28,7 +29,7 @@ Vector& Vector::operator=(const Vector& other) {
         delete[] mData;
         mSize = other.mSize;
         mData = new double[mSize];
-        for (int i = 0; i < mSize; i++) {
+        for (int i = 0; i < mSize; ++i) {
             mData[i] = other.mData[i];
         }
     }
@@ -46,73 +47,73 @@ double& Vector::operator[](int index) {
     return mData[index];
 }
 
-// Truy cập phần tử từ chỉ số 1 (kiểu toán học)
+// Truy cập phần tử từ chỉ số 1 (dạng toán học)
 double& Vector::operator()(int index) {
     assert(index >= 1 && index <= mSize);
     return mData[index - 1];
 }
 
-// Toán tử unary âm: -v → đảo dấu từng phần tử
+// Toán tử unary âm: đảo dấu từng phần tử
 Vector Vector::operator-() const {
     Vector result(mSize);
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         result.mData[i] = -mData[i];
     }
     return result;
 }
 
-// Cộng hai vector cùng kích thước
+// Cộng hai vector
 Vector Vector::operator+(const Vector& other) const {
     assert(mSize == other.mSize);
     Vector result(mSize);
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         result.mData[i] = mData[i] + other.mData[i];
     }
     return result;
 }
 
-// Trừ hai vector cùng kích thước
+// Trừ hai vector
 Vector Vector::operator-(const Vector& other) const {
     assert(mSize == other.mSize);
     Vector result(mSize);
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         result.mData[i] = mData[i] - other.mData[i];
     }
     return result;
 }
 
-// Dot product giữa hai vector: trả về số double
+// Nhân vô hướng (dot product) → trả về số thực
 double Vector::operator*(const Vector& other) const {
     assert(mSize == other.mSize);
-    double sum = 0.0;
-    for (int i = 0; i < mSize; i++) {
-        sum += mData[i] * other.mData[i];
+    double result = 0.0;
+    for (int i = 0; i < mSize; ++i) {
+        result += mData[i] * other.mData[i];
     }
-    return sum;
+    return result;
 }
 
-// Cộng mỗi phần tử trong vector với một số
+// Cộng vector với số
 Vector Vector::operator+(double value) const {
     Vector result(mSize);
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         result.mData[i] = mData[i] + value;
     }
     return result;
 }
 
-// Trừ mỗi phần tử trong vector với một số
+// Trừ số khỏi vector
 Vector Vector::operator-(double value) const {
     Vector result(mSize);
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         result.mData[i] = mData[i] - value;
     }
     return result;
 }
 
-// Nhân mỗi phần tử trong vector với một số
+// Nhân vector với số
 Vector Vector::operator*(double value) const {
     Vector result(mSize);
-    for (int i = 0; i < mSize; i++) {
+    for (int i = 0; i < mSize; ++i) {
         result.mData[i] = mData[i] * value;
     }
     return result;
