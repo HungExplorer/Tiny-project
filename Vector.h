@@ -41,13 +41,9 @@ public:
     // Dot product giữa 2 vector → trả về số thực
     double operator*(const Vector& other) const;
 
-    // Cộng với số
+    // Phép toán với số (scalar)
     Vector operator+(double value) const;
-
-    // Trừ với số
     Vector operator-(double value) const;
-
-    // Nhân với số
     Vector operator*(double value) const;
 };
 
