@@ -38,6 +38,12 @@ public:
     double determinant() const;
     Matrix inverse() const;
     Matrix pseudoInverse() const;
+        
+    //Gán dữ liệu
+    void manualAssign();
+
+    //Hiển thị
+    void display() const; 
 };
 
 #endif
