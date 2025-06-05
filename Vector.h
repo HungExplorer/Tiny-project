@@ -35,7 +35,8 @@ public:
     Vector operator-() const;  // unary minus
 
     //Gán dữ liệu
-    void assign();
+    void manualAssign();
+    void assign(double* val);
 
     //Hiển thị
     void display() const; 

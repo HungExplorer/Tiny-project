@@ -186,7 +186,7 @@ Matrix Matrix::pseudoInverse() const {
 }
 
 //Data assignment
-void Matrix::assign()
+void Matrix::manualAssign()
 {
     cout << endl << "Enter the elements for matrix: " << endl;
     for (int i = 0; i < mNumRows; ++i)

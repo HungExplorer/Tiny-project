@@ -124,12 +124,20 @@ Vector Vector::operator-() const {
 }
 
 //Data assignment
-void Vector::assign(){
+void Vector::manualAssign(){
     cout << endl << "Enter the elements for vector: " << endl;
     for (int i = 0; i < mSize; i++) 
     {
         cout << "Enter the value for position " << i+1 << ": ";
         cin >> mData[i];
+    }
+}
+
+void Vector::assign(double* val) {
+    assert(val != nullptr);
+    for (int i = 0; i < mSize; i++)
+    {
+        mData[i] = val[i];
     }
 }
 

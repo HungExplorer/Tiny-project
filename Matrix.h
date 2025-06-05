@@ -40,7 +40,7 @@ public:
     Matrix pseudoInverse() const;
         
     //Gán dữ liệu
-    void assign();
+    void manualAssign();
 
     //Hiển thị
     void display() const; 

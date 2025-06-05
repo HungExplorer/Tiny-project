@@ -7,11 +7,17 @@ int main()
 {
     Matrix A(3,3);
     Vector b(3);
-    A.assign();
+    A.manualAssign();
     A.display();
-    b.assign();
+    b.manualAssign();
     b.display();
 
     LinearSystem Anb(A,b);
     Anb.display();
+    try {
+        Vector x = Anb.solve();
+        x.display();
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Solve failed: " << e.what() << std::endl;
+    }
 }
