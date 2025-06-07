@@ -1,19 +1,16 @@
 #include "Vector.h"
 #include <iostream>
-#include <cassert>  // Dùng để kiểm tra chỉ số hợp lệ
-
+#include <cassert> 
 using namespace std;
 
-// Constructor: khởi tạo vector với size phần tử và gán tất cả = 0.0
 Vector::Vector(int size) : mSize(size) {
-    assert(size > 0);  // Đảm bảo size > 0
+    assert(size > 0);  
     mData = new double[mSize];
     for (int i = 0; i < mSize; ++i) {
         mData[i] = 0.0;
     }
 }
 
-// Copy constructor
 Vector::Vector(const Vector& other) : mSize(other.mSize) {
     mData = new double[mSize];
     for (int i = 0; i < mSize; ++i) {
@@ -21,16 +18,13 @@ Vector::Vector(const Vector& other) : mSize(other.mSize) {
     }
 }
 
-// Destructor
 Vector::~Vector() {
     delete[] mData;
 }
 
-// Toán tử gán
 Vector& Vector::operator=(const Vector& other) {
     if (this != &other) {
         delete[] mData;
-
         mSize = other.mSize;
         mData = new double[mSize];
         for (int i = 0; i < mSize; ++i) {
@@ -40,24 +34,20 @@ Vector& Vector::operator=(const Vector& other) {
     return *this;
 }
 
-// Trả về kích thước
 int Vector::getSize() const {
     return mSize;
 }
 
-// Truy cập từ chỉ số 0
 double& Vector::operator[](int index) {
     assert(index >= 0 && index < mSize);
     return mData[index];
 }
 
-// Truy cập từ chỉ số 1
 double& Vector::operator()(int index) {
     assert(index >= 1 && index <= mSize);
     return mData[index - 1];
 }
 
-// Cộng hai vector
 Vector Vector::operator+(const Vector& other) const {
     assert(mSize == other.mSize);
     Vector result(mSize);
@@ -67,7 +57,6 @@ Vector Vector::operator+(const Vector& other) const {
     return result;
 }
 
-// Trừ hai vector
 Vector Vector::operator-(const Vector& other) const {
     assert(mSize == other.mSize);
     Vector result(mSize);
@@ -77,7 +66,6 @@ Vector Vector::operator-(const Vector& other) const {
     return result;
 }
 
-// Nhân vô hướng (dot product) trả về double
 double Vector::operator*(const Vector& other) const {
     assert(mSize == other.mSize);
     double result = 0.0;
@@ -87,7 +75,6 @@ double Vector::operator*(const Vector& other) const {
     return result;
 }
 
-// Cộng scalar
 Vector Vector::operator+(double value) const {
     Vector result(mSize);
     for (int i = 0; i < mSize; ++i) {
@@ -96,7 +83,6 @@ Vector Vector::operator+(double value) const {
     return result;
 }
 
-// Trừ scalar
 Vector Vector::operator-(double value) const {
     Vector result(mSize);
     for (int i = 0; i < mSize; ++i) {
@@ -105,7 +91,6 @@ Vector Vector::operator-(double value) const {
     return result;
 }
 
-// Nhân scalar
 Vector Vector::operator*(double value) const {
     Vector result(mSize);
     for (int i = 0; i < mSize; ++i) {
@@ -114,7 +99,6 @@ Vector Vector::operator*(double value) const {
     return result;
 }
 
-// Đổi dấu toàn bộ vector
 Vector Vector::operator-() const {
     Vector result(mSize);
     for (int i = 0; i < mSize; ++i) {
@@ -123,7 +107,6 @@ Vector Vector::operator-() const {
     return result;
 }
 
-//Data assignment
 void Vector::manualAssign(){
     cout << endl << "Enter the elements for vector: " << endl;
     for (int i = 0; i < mSize; i++) 
@@ -141,7 +124,6 @@ void Vector::assign(double* val) {
     }
 }
 
-//Vector display
 void Vector::display() const{
     cout << endl << "[";
     for (int i = 0; i < mSize; i++) 
