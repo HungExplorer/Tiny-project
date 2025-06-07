@@ -1,12 +1,10 @@
-// main.cpp
 #include <iostream>
 #include <iomanip>
 #include "Matrix.h"
 #include "Vector.h"
-#include "GeneralLinSystem.h"  // chứa solvePseudoInverse() & solveTikhonov()
+#include "GeneralLinSystem.h"  
 
 using namespace std;
-
 int main() {
     cout << fixed << setprecision(6);
 
@@ -16,7 +14,6 @@ int main() {
         Matrix A(3, 2);
         Vector b(3);
 
-        // A = [1 0; 0 1; 1 1]
         A(1,1) = 1;  A(1,2) = 0;
         A(2,1) = 0;  A(2,2) = 1;
         A(3,1) = 1;  A(3,2) = 1;
@@ -30,12 +27,9 @@ int main() {
 
         GeneralLinSystem sys(A, b);
 
-        // 1) Pseudoinverse
         Vector x_pinv = sys.solvePseudoInverse();
         cout << "\n> Pseudoinverse x: ";  x_pinv.display();
-        // Kỳ vọng: [1.000000, 2.000000]
 
-        // 2) Tikhonov (lambda = 0.1)
         Vector x_tikh = sys.solveTikhonov(0.1);
         cout << "\n> Tikhonov (λ=0.1) x: "; x_tikh.display();
     }
@@ -47,8 +41,6 @@ int main() {
         cout << "--- Test Under-determined (2×3) ---\n";
         Matrix A(2, 3);
         Vector b(2);
-
-        // A = [1 2 3; 4 5 6]
         A(1,1) = 1;  A(1,2) = 2;  A(1,3) = 3;
         A(2,1) = 4;  A(2,2) = 5;  A(2,3) = 6;
 
@@ -60,15 +52,13 @@ int main() {
 
         GeneralLinSystem sys(A, b);
 
-        // 1) Pseudoinverse
         Vector x_pinv = sys.solvePseudoInverse();
         cout << "\n> Pseudoinverse x: "; x_pinv.display();
 
-        // 2) Tikhonov (lambda = 0.05)
         Vector x_tikh = sys.solveTikhonov(0.05);
         cout << "\n> Tikhonov (λ=0.05) x: "; x_tikh.display();
     }
 
-    cout << "\n==== KẾT THÚC TEST ====\n";
+    cout << "\n==== END TEST ====\n";
     return 0;
 }
