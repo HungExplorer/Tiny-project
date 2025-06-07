@@ -1,7 +1,6 @@
 #include "GeneralLinSystem.h"
 #include <cassert>
 #include <cmath>
-
 GeneralLinSystem::GeneralLinSystem(const Matrix& A, const Vector& b)
     : mRows(A.Rows()), mCols(A.Cols())
 {
@@ -11,20 +10,16 @@ GeneralLinSystem::GeneralLinSystem(const Matrix& A, const Vector& b)
     mpA = new Matrix(A);
     mpb = new Vector(b);
 }
-
 GeneralLinSystem::~GeneralLinSystem() {
     delete mpA;
     delete mpb;
 }
-
 int GeneralLinSystem::Rows() const {
     return mRows;
 }
-
 int GeneralLinSystem::Cols() const {
     return mCols;
 }
-
 Vector GeneralLinSystem::solvePseudoInverse() const {
     Matrix A_pinv = mpA->pseudoInverse();
     assert(A_pinv.Rows() == mCols && A_pinv.Cols() == mRows);
@@ -38,7 +33,6 @@ Vector GeneralLinSystem::solvePseudoInverse() const {
     }
     return x;
 }
-
 Vector GeneralLinSystem::solveTikhonov(double lambda) const {
     Matrix At = mpA->transpose();
     Matrix ATA = At * (*mpA);
@@ -65,7 +59,5 @@ Vector GeneralLinSystem::solveTikhonov(double lambda) const {
     }
     return x;
 }
-
-
     return x;
 }
