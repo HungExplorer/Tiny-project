@@ -59,5 +59,3 @@ Vector GeneralLinSystem::solveTikhonov(double lambda) const {
     }
     return x;
 }
-    return x;
-}
